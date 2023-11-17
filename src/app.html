@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    %sveltekit.head%
+  </head>
+  <body class="font-display" data-sveltekit-preload-data="hover">
+    <div class="contents">%sveltekit.body%</div>
+    <script>
+      // Utility to handle both new and old ways of copying HTML
+      // Call window.copyTextToClipboard('text') anywhere in your code
+      function fallbackCopyTextToClipboard(text) {
+        var textArea = document.createElement('textarea')
+        textArea.value = text
+        textArea.style.top = '0'
+        textArea.style.left = '0'
+        textArea.style.position = 'fixed'
+        document.body.appendChild(textArea)
+        textArea.focus()
+        textArea.select()
+        try {
+          document.execCommand('copy')
+        } catch (err) {}
+        document.body.removeChild(textArea)
+      }
+      function copyTextToClipboard(COPY_TEXT) {
+        if (!navigator.clipboard) {
+          fallbackCopyTextToClipboard(COPY_TEXT)
+          return
+        }
+        navigator.clipboard.writeText(COPY_TEXT)
+      }
+    </script>
+  </body>
+</html>
